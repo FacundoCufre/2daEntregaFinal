@@ -1,0 +1,25 @@
+<form method="POST" id="form1">
+    <input type="text" name="title" id="title" placeholder="nombre del producto">
+    <input type="text" name="price" id="price" placeholder="precio">
+    <input type="text" name="thumbnail" placeholder="link imagen">
+    <button type="submit" form="form1">subir producto</button>
+</form>
+
+<form method="POST" id="form2">
+    <input type="text" name="email" id="email" placeholder="mail">
+    <input type="text" name="message" id="message" placeholder="mensaje">
+    <button type="submit" form="form2">envia mensaje</button>
+</form>
+
+<section id="subirProducto">
+    <form method="POST" onsubmit="return addProduct(this)">
+        <input type="text" name="title" id="title" placeholder="nombre del producto">
+        <input type="text" name="price" id="price" placeholder="precio">
+        <input type="text" name="thumbnail" placeholder="link imagen">
+        <input type="submit" value="subir producto"></input>
+    </form>
+</section>
+
+<section id="chat">
+
+</section>

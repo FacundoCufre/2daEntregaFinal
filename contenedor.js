@@ -46,9 +46,10 @@ class Contenedor{
         try{
             let data = await fs.promises.readFile(this.ruta, 'utf8')
             let dataParse = JSON.parse(data)
-            let producto = dataParse.find(producto => producto.id === id)
+            let producto = dataParse.find(producto => producto.id == id)
             if(producto){
-                console.log(producto)
+                producto = [producto]
+                return producto
             }
             else{
                 console.log('no se encontro el producto')
@@ -65,9 +66,6 @@ class Contenedor{
             let dataParse = JSON.parse(data)
             if(!dataParse.length){
                 console.log('no hay productos')
-            }
-            else{
-                console.log('aaa')
             }
             return dataParse
         }

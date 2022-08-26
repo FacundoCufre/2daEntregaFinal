@@ -3,54 +3,9 @@
     "title": "heladera",
     "price": 100000,
     "thumbnail": "https://www.lg.com/ar/images/heladeras/md06176357/gallery/1100_1.jpg",
+    "timestamp": 1661477339774,
+    "description": "Heladera LG gris",
+    "stock": 5,
     "id": 1
-  },
-  {
-    "title": "aaa",
-    "price": "aaa",
-    "thumbnail": "aaa",
-    "id": 2
-  },
-  {
-    "title": "aaa",
-    "price": "aaa",
-    "thumbnail": "aaa",
-    "id": 3
-  },
-  {
-    "title": "aaa",
-    "price": "aaa",
-    "thumbnail": "aaa",
-    "id": 4
-  },
-  {
-    "title": "hola",
-    "price": "a",
-    "thumbnail": "b",
-    "id": 5
-  },
-  {
-    "title": "hola",
-    "price": "a",
-    "thumbnail": "b",
-    "id": 6
-  },
-  {
-    "title": "gg",
-    "price": "gg",
-    "thumbnail": "gg",
-    "id": 7
-  },
-  {
-    "title": "a",
-    "price": "a",
-    "thumbnail": "a",
-    "id": 8
-  },
-  {
-    "title": "hhh",
-    "price": "hhhh",
-    "thhumbnail": "hhhh",
-    "id": 10
   }
 ]

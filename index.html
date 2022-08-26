@@ -9,29 +9,27 @@
 </head>
 
 <body>
-    <script src="/index.js"></script>
-
-    <form method="POST" id="form1">
-        <input type="text" name="title" id="title" placeholder="nombre del producto">
-        <input type="text" name="price" id="price" placeholder="precio">
-        <input type="text" name="thumbnail" placeholder="link imagen">
-        <button type="submit" form="form1">subir producto</button>
-    </form>
-
+    
+    
+    
     <section id="productsList">
 
     </section>
 
-    <form method="POST" id="form2">
-        <input type="text" name="email" id="email" placeholder="mail">
-        <input type="text" name="message" id="message" placeholder="mensaje">
-        <button type="submit" form="form2">envia mensaje</button>
-    </form>
-    
-    <section id="chat">
-
+    <section id="subirProducto">
+        <form method="POST" onsubmit="return addProduct(this)">
+            <input type="text" name="title" id="title" placeholder="nombre del producto">
+            <input type="text" name="price" id="price" placeholder="precio">
+            <input type="text" name="thumbnail" id="thumbnail" placeholder="link imagen">
+            <input type="text" name="descripcion" id="description" placeholder="descripcion">
+            <input type="number" name="stock" id="stock" placeholder="stock">
+            <input type="submit" value="subir producto"></input>
+        </form>
     </section>
 
+    
+    
+<script src="/index.js"></script>
 </body>
 
 </html>
