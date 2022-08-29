@@ -9,7 +9,9 @@ class Carrito{
         try{
             let data = await fs.promises.readFile(this.ruta, 'utf8')
             let dataParse = JSON.parse(data)
-            await fs.promises.writeFile(this.ruta, JSON.stringify( [...dataParse, {id: dataParse.length+1,timestamp: Date.now(), prods: []}] , null, 2) )
+            let carroNuevo = {id: dataParse.length+1,timestamp: Date.now(), prods: []}
+            await fs.promises.writeFile(this.ruta, JSON.stringify( [...dataParse, carroNuevo ] , null, 2) )
+            return carroNuevo.id
         }
         catch(error){
             console.log(error)

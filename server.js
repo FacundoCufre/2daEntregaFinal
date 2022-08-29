@@ -55,10 +55,12 @@ adminRouter.get('/productos/:id?', async (req, res) => {
             socket.emit('listado', mensaje)
         }) 
     }
-    res.sendFile('./index.html', {root: __dirname})
+    const productos = await contenedor.getAll()
+    const resGet = JSON.stringify(productos)
+    res.json(resGet)
 })
 
-adminRouter.post('/productos/', (req, res) => {
+adminRouter.post('/productos/', async (req, res) => {
     io.on('connection', (socket) => {
         socket.on('producto-nuevo', async producto => {
             await contenedor.save(producto)
@@ -70,7 +72,10 @@ adminRouter.post('/productos/', (req, res) => {
             }
             io.sockets.emit('mensaje-servidor', mensaje )
         })
-    }) 
+    })
+    const productos = await contenedor.getAll()
+    const resPost = JSON.stringify(productos)
+    res.json(resPost)
 })
 
 adminRouter.delete('/productos/:id', async (req, res) => {
@@ -82,6 +87,8 @@ adminRouter.delete('/productos/:id', async (req, res) => {
         productos: productos,
     }
     io.sockets.emit('mensaje-servidor', mensaje )
+    const resDelete = JSON.stringify(productos)
+    res.json(resDelete)
 })
 
 adminRouter.get('/carrito', (req, res) =>{
@@ -91,7 +98,9 @@ adminRouter.get('/carrito', (req, res) =>{
 adminRouter.post('/carrito', async (req, res) =>{
     io.on('connection', (socket) => {
         socket.on('carrito-nuevo', async () => {
-            await carrito.create()
+            const carroNuevo = await carrito.create()
+            const resPost = JSON.stringify(carroNuevo)
+            res.json(resPost)
         })
     })
 })
@@ -99,19 +108,24 @@ adminRouter.post('/carrito', async (req, res) =>{
 adminRouter.delete('/carrito/:id', async (req, res) =>{
     const {id} = req.params
     await carrito.deleteById(id)
+    const carritosRestantes = await carrito.getAll()
+    const resDelete = JSON.stringify(carritosRestantes)
+    res.json(resDelete)
 })
 
-adminRouter.get('/carrito/:id/productos',  (req, res) =>{ 
+adminRouter.get('/carrito/:id/productos', async (req, res) =>{ 
+    const {id} = req.params
     io.on('connection', async socket => {
-        const {id} = req.params
         const carritoID = await carrito.getById(id)
         io.sockets.emit('ver-carro', carritoID)
     })
-    res.sendFile('./carrito.html', {root: __dirname})
-    console.log(Date.now())
+    const carritoID = await carrito.getById(id)
+    const resGet = JSON.stringify(carritoID)
+    res.json(resGet)
+    
 })
 
-adminRouter.post('/carrito/:id/productos', (req, res) =>{
+adminRouter.post('/carrito/:id/productos', async (req, res) =>{
     const {id} = req.params
     io.on('connection', (socket) => {
         socket.on('buscar-porID', async (id2) => {
@@ -123,9 +137,12 @@ adminRouter.post('/carrito/:id/productos', (req, res) =>{
             await carrito.updateById(carritoID)
         })
     })
+    const carritoActualizado = await carrito.getById(id)
+    const resPost = JSON.stringify(carritoActualizado)
+    res.json(resPost)
 })
 
-adminRouter.delete('/carrito/:id/productos/:id_prod', (req, res) =>{
+adminRouter.delete('/carrito/:id/productos/:id_prod', async (req, res) =>{
     const {id} = req.params
     const {id_prod} = req.params
     io.on('connection', async (socket) => {
@@ -134,6 +151,9 @@ adminRouter.delete('/carrito/:id/productos/:id_prod', (req, res) =>{
         carritoID.prods.splice(resultado,1)
         await carrito.updateById(carritoID)
     })
+    const carritoActualizado = await carrito.getById(id)
+    const resDelete = JSON.stringify(carritoActualizado)
+    res.json(resDelete)
 })
 
 httpServer.listen(8080, () => console.log('SERVER ON'))
