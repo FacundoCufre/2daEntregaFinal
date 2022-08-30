@@ -56,26 +56,19 @@ adminRouter.get('/productos/:id?', async (req, res) => {
         }) 
     }
     const productos = await contenedor.getAll()
-    const resGet = JSON.stringify(productos)
-    res.json(resGet)
+    res.json(productos)
 })
 
 adminRouter.post('/productos/', async (req, res) => {
-    io.on('connection', (socket) => {
-        socket.on('producto-nuevo', async producto => {
-            await contenedor.save(producto)
-            const productos = await contenedor.getAll()
-            console.log(productos)
-            const mensaje = {
-                mensaje: 'producto insertado',
-                productos: productos,
-            }
-            io.sockets.emit('mensaje-servidor', mensaje )
-        })
-    })
+    const nombre = req.query.title
+    const precio = req.query.price
+    const thumbnail = req.query.thumbnail
+    const description = req.query.description
+    const stock = req.query.stock
+    const producto = {title: nombre, price: precio, thumbnail: thumbnail, timestamp: Date.now(), description: description, stock: stock,}
+    await contenedor.save(producto)
     const productos = await contenedor.getAll()
-    const resPost = JSON.stringify(productos)
-    res.json(resPost)
+    res.json(productos)
 })
 
 adminRouter.delete('/productos/:id', async (req, res) => {
@@ -87,8 +80,7 @@ adminRouter.delete('/productos/:id', async (req, res) => {
         productos: productos,
     }
     io.sockets.emit('mensaje-servidor', mensaje )
-    const resDelete = JSON.stringify(productos)
-    res.json(resDelete)
+    res.json(productos)
 })
 
 adminRouter.get('/carrito', (req, res) =>{
@@ -96,21 +88,15 @@ adminRouter.get('/carrito', (req, res) =>{
 })
 
 adminRouter.post('/carrito', async (req, res) =>{
-    io.on('connection', (socket) => {
-        socket.on('carrito-nuevo', async () => {
-            const carroNuevo = await carrito.create()
-            const resPost = JSON.stringify(carroNuevo)
-            res.json(resPost)
-        })
-    })
+    const carroNuevo = await carrito.create()
+    res.json(carroNuevo)
 })
 
 adminRouter.delete('/carrito/:id', async (req, res) =>{
     const {id} = req.params
     await carrito.deleteById(id)
     const carritosRestantes = await carrito.getAll()
-    const resDelete = JSON.stringify(carritosRestantes)
-    res.json(resDelete)
+    res.json(carritosRestantes)
 })
 
 adminRouter.get('/carrito/:id/productos', async (req, res) =>{ 
@@ -120,8 +106,7 @@ adminRouter.get('/carrito/:id/productos', async (req, res) =>{
         io.sockets.emit('ver-carro', carritoID)
     })
     const carritoID = await carrito.getById(id)
-    const resGet = JSON.stringify(carritoID)
-    res.json(resGet)
+    res.json(carritoID)
     
 })
 
@@ -138,8 +123,7 @@ adminRouter.post('/carrito/:id/productos', async (req, res) =>{
         })
     })
     const carritoActualizado = await carrito.getById(id)
-    const resPost = JSON.stringify(carritoActualizado)
-    res.json(resPost)
+    res.json(carritoActualizado)
 })
 
 adminRouter.delete('/carrito/:id/productos/:id_prod', async (req, res) =>{
@@ -152,8 +136,7 @@ adminRouter.delete('/carrito/:id/productos/:id_prod', async (req, res) =>{
         await carrito.updateById(carritoID)
     })
     const carritoActualizado = await carrito.getById(id)
-    const resDelete = JSON.stringify(carritoActualizado)
-    res.json(resDelete)
+    res.json(carritoActualizado)
 })
 
 httpServer.listen(8080, () => console.log('SERVER ON'))

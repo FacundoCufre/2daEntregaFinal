@@ -36,9 +36,9 @@ class Carrito{
         try{
             let data = await fs.promises.readFile(this.ruta, 'utf8')
             let dataParse = JSON.parse(data)
-            let cart = dataParse.find(cart => cart.id === id)
+            let cart = dataParse.find(cart => cart.id == id)
             if(cart){
-                let dataParseFiltrado = dataParse.filter(cart => cart.id !== id)
+                let dataParseFiltrado = dataParse.filter(cart => cart.id != id)
                 await fs.promises.writeFile(this.ruta, JSON.stringify( dataParseFiltrado, null, 2) )
                 console.log('carrito eliminado', dataParseFiltrado)
             }
