@@ -74,6 +74,7 @@ class ContenedorFirebase {
             console.log(error)
         }
     }
+    
 
 }
 
